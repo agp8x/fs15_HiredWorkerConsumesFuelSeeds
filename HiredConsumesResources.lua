@@ -12,11 +12,12 @@
 --      v0.92   - Updated to FS2013
 --              - Stops hired worker, if sowing machine/sprayer is empty or fuel is 1% or less.
 --              - Requires patch 1.4.0.x
+--      v0.93   - fix for FS2015 holmer DLC (by agp8x@agp8x.org)
 --
 
 
 HiredConsumesResources = {}
-HiredConsumesResources.version = 0.92;
+HiredConsumesResources.version = 0.93;
 
 --
 function HiredConsumesResources.getIsHired(self, superFunc)
@@ -38,15 +39,25 @@ function HiredConsumesResources.updateTick(self, superFunc, dt)
         if self.isHired then
             local shouldDismissWorker = false;
             -- If any of the attached implements is a sowingMachine or sprayer, make sure it has enough in the fillable.
+			local oneEmpty=false;
+			local allEmpty=true;
             for _,attachable in pairs(self.attachedImplements) do
                 if attachable.object ~= nil and (attachable.object.lastSowingArea ~= nil or attachable.object.isSprayerTank ~= nil) then 
-                    if (attachable.object.fillLevel ~= nil and attachable.object.fillLevel <= 0) then
-                        -- no more in sowingMachine/sprayer, so dismiss worker.
-                        shouldDismissWorker = true;
-                        break
+                    if attachable.object.fillLevel ~= nil then 
+						if attachable.object.fillLevel <= 0 then
+							-- no more in sowingMachine/sprayer, so dismiss worker.
+							--shouldDismissWorker = true;
+							--break
+							oneEmpty=true;
+						else
+							allEmpty=false;
+						end;
                     end;
                 end;
             end;
+			if oneEmpty and allEmpty then
+				shouldDismissWorker = true;
+			end;
             -- If fuel-level is less than 1%, then dismiss worker.
             if self.fuelFillLevel ~= nil and self.fuelCapacity ~= nil and self.fuelCapacity > 0 then
                 if self.fuelFillLevel <= (self.fuelCapacity * 0.01) then
