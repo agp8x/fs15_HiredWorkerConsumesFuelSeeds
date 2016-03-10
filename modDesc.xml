@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="20">
+    <author>Decker_MMIV</author>
+    <version>0.92</version>
+
+    <title>
+        <en>Hired worker consumes fuel and seeds</en>
+        <de>Hired worker consumes fuel and seeds</de>
+    </title>
+    <description>
+        <en>
+<![CDATA[Makes hired workers NOT auto-magically refill.
+The hired workers will stop, if sowingmachine becomes empty, or fuel-level goes below 1%.
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </en>
+        <de>
+<![CDATA[Makes hired workers NOT automatically refill.
+The hired workers will stop, if sowingmachine becomes empty, or fuel-level goes below 1%.
+
+Decker_MMIV - fs-uk.com, forum.farming-simulator.com, modhoster.com]]>
+        </de>
+    </description>
+
+    <iconFilename>store_HiredConsumes.dds</iconFilename>
+    <multiplayer supported="true"/>
+
+    <extraSourceFiles>
+        <sourceFile filename="HiredConsumesResources.lua" />
+    </extraSourceFiles>
+</modDesc>
